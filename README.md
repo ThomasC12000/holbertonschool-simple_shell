@@ -78,12 +78,12 @@
 
 ## #️⃣ - File descriptions -
 	
-| FILE                                       | DESCRIPTION                 |
-|--------------------------------------------|-----------------------------|
-| [`shell.c`](shell.c)                       | mains function of the shell |
-| [`shell.c`](shell.c)                       | mains function of the shell |
-| [`man_1_simple_shell`](man_1_simple_shell) | man page                    |
-| [`README.md`](README.md)                   | README file                 |
+| FILE                                       | DESCRIPTION                       |
+|--------------------------------------------|-----------------------------------|
+| [`shell.h`](shell.h)                       | libraries and function prototypes |
+| [`shell.c`](shell.c)                       | mains function of the shell       |
+| [`man_1_simple_shell`](man_1_simple_shell) | man page                          |
+| [`README.md`](README.md)                   | README file                       |
 
 <br />
 
