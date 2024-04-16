@@ -4,74 +4,61 @@
 #include <string.h>
 #include <sys/wait.h>
 
-/**
- * main - Entry point
- * @argc: The number of command line arguments
- * @argv: An array containing the command line arguments
- * Return: 0 on success
- */
-int main(int argc, char **argv)
-{
-	char *token;
-	char *cwd = getenv("PWD");
-	char *input = NULL;
-	size_t input_size = 0;
-	ssize_t read;
+#define MAX_CMD_LEN 100
+#define MAX_ARGS 10
 
-	if (cwd == NULL)
-	{
-		perror("getcwd() error");
-		return (1);
-	}
-		while (1)
-	{
-		printf("%s ~$ ", cwd);
-		read = getline(&input, &input_size, stdin);
-		if (read == -1)
-		{
-			printf("Error reading input.\n");
-			free(input);
-			return (1);
-		}
+int main() {
+    char command[MAX_CMD_LEN];
+    char *args[MAX_ARGS];
+    int should_run = 1;
+    pid_t pid;
+    char *token;
+    int i;
 
-		if (input[read - 1] == '\n')
-			input[read - 1] = '\0';
+    while (should_run) {
+        /* Lire la commande de l'utilisateur */
+        printf("\033[36m@%s: $ ", getenv("PWD"));
+        fflush(stdout);
 
-		if (strcmp(input, "exit") == 0)
-			break;
-			
-		token = strtok(input, " ");
-		while (token != NULL)
-			{
-				pid_t pid = fork();
-				if (pid == -1)
-				{
-					perror("fork error:");
-					return (1);
-				}
-				else if (pid == 0)
-				{
-					char *argv[] = {"/bin/bash", "-c",token , NULL};
-					if (execve(argv[0], argv, NULL) == -1)
-					{
-						perror("execve error:");
-						free(input);
-						return (1);
-					}
-				exit(0);
-			}
-			else
-			{
-				int status;
-				waitpid(pid, &status, 0);
-			}
-			token = strtok(NULL, " ");
-			}
-		
-		}
-		(void)argc;
-		(void)argv;
-		
-		free(input);
-		return (0);
+        if (fgets(command, MAX_CMD_LEN, stdin) == NULL) {
+            break;  
+        }
+
+        command[strcspn(command, "\n")] = '\0'; /* Supprimer le saut de ligne final */
+
+        /* Quitter si la commande est "exit" */
+        if (strcmp(command, "exit") == 0) {
+            should_run = 0;
+            continue;
+        }
+
+        /* Tokenize la commande */
+        i = 0;
+        token = strtok(command, " ");
+        while (token != NULL && i < MAX_ARGS - 1) {
+            args[i++] = token;
+            token = strtok(NULL, " ");
+        }
+        args[i] = NULL;
+
+        /* Fork pour exécuter la commande */
+        pid = fork();
+
+        if (pid < 0) {
+            fprintf(stderr, "Erreur lors de la création du processus fils\n");
+            return 1;
+        }
+
+        if (pid == 0) { /* Processus fils */
+            /* Exécuter la commande */
+            if (execvp(args[0], args) == -1) {
+                fprintf(stderr, "Erreur lors de l'exécution de la commande\n");
+            }
+            exit(EXIT_FAILURE);
+        } else { /* Processus parent */
+            /* Attendre la fin du processus fils */
+            wait(NULL);
+        }
+    }
+    return (0);
 }
