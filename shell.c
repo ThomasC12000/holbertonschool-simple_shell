@@ -4,68 +4,74 @@
 #include <string.h>
 #include <sys/wait.h>
 
-#define MAX_CMD_LEN 100
-#define MAX_ARGS 10
+/**
+ * main - Entry point
+ * @argc: The number of command line arguments
+ * @argv: An array containing the command line arguments
+ * Return: 0 on success
+ */
+int main(int argc, char **argv)
+{
+	char *token;
+	char *cwd = getenv("PWD");
+	char *input = NULL;
+	size_t input_size = 0;
+	ssize_t read;
 
-int main() {
-    char command[MAX_CMD_LEN];
-    char *args[MAX_ARGS];
-    char *token;
-    pid_t pid;
-    int status;
-	int i = 0;
+	if (cwd == NULL)
+	{
+		perror("getcwd() error");
+		return (1);
+	}
+		while (1)
+	{
+		printf("%s ~$ ", cwd);
+		read = getline(&input, &input_size, stdin);
+		if (read == -1)
+		{
+			printf("Error reading input.\n");
+			free(input);
+			return (1);
+		}
 
-    while (1) {
-        printf("$ ");
-        fflush(stdout);
+		if (input[read - 1] == '\n')
+			input[read - 1] = '\0';
 
-        if (fgets(command, MAX_CMD_LEN, stdin) == NULL) {
-            printf("\n");
-            break;
-        }
-
-        command[strcspn(command, "\n")] = '\0';
-
-        /* Parse command and arguments */
-        
-        token = strtok(command, " ");
-        while (token != NULL && i < MAX_ARGS - 1) {
-            args[i++] = token;
-            token = strtok(NULL, " ");
-        }
-        args[i] = NULL;
-
-        /* Handle built-in commands */
-        if (strcmp(args[0], "exit") == 0) {
-            break;
-        } else if (strcmp(args[0], "env") == 0) {
-            extern char **environ;
-            char **env = environ;
-            while (*env) {
-                printf("%s\n", *env);
-                env++;
-            }
-            continue;
-        }
-
-        /* Fork and execute command */
-        pid = fork();
-
-        if (pid < 0) {
-            perror("fork");
-            exit(EXIT_FAILURE);
-        }
-
-        if (pid == 0) { /* Child process */
-            /* Search for command in PATH */
-            execvp(args[0], args);
-            /* If execvp fails, print error message */
-            fprintf(stderr, "%s: command not found\n", args[0]);
-            exit(EXIT_FAILURE);
-        } else { /* Parent process */
-            waitpid(pid, &status, 0);
-        }
-    }
-
-    return 0;
+		if (strcmp(input, "exit") == 0)
+			break;
+			
+		token = strtok(input, " ");
+		while (token != NULL)
+			{
+				pid_t pid = fork();
+				if (pid == -1)
+				{
+					perror("fork error:");
+					return (1);
+				}
+				else if (pid == 0)
+				{
+					char *argv[] = {"/bin/bash", "-c",token , NULL};
+					if (execve(argv[0], argv, NULL) == -1)
+					{
+						perror("execve error:");
+						free(input);
+						return (1);
+					}
+				exit(0);
+			}
+			else
+			{
+				int status;
+				waitpid(pid, &status, 0);
+			}
+			token = strtok(NULL, " ");
+			}
+		
+		}
+		(void)argc;
+		(void)argv;
+		
+		free(input);
+		return (0);
 }
