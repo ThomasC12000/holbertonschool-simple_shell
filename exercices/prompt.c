@@ -14,7 +14,7 @@ int main(int argc, char **argv)
 
     if (getcwd(cwd, sizeof(cwd)) != NULL)
     {
-        printf("%s ~$ ", cwd);
+        printf("\033[36m@%s: $ ", cwd);
     }
     else
     {
