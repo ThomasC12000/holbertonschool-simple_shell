@@ -21,15 +21,7 @@ int main(int argc, char **argv)
     ssize_t read;
 	pid_t pid;
 
-<<<<<<< HEAD
-    if (getcwd(cwd, sizeof(cwd)) != NULL)
-    {
-        printf("\033[36m@%s: $ ", cwd);
-    }
-    else
-=======
     if (cwd == NULL)
->>>>>>> 2f2b3b7c9a8e445bcc6c1a919f8dd2a443cdb65f
     {
         perror("getcwd() error");
         return (1);
