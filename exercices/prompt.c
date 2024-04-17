@@ -19,6 +19,7 @@ int main(int argc, char **argv)
     char *input = NULL;
     size_t input_size = 0;
     ssize_t read;
+	pid_t pid;
 
 <<<<<<< HEAD
     if (getcwd(cwd, sizeof(cwd)) != NULL)
@@ -49,7 +50,12 @@ int main(int argc, char **argv)
         token = strtok(input, " ");
         while (token != NULL)
         {
-            pid_t pid = fork();
+            if (access(token, X_OK) == -1)
+            {
+                printf("Command not found: %s\n", token);
+                break;
+            }
+			pid = fork();
             if (pid == -1)
             {
                 perror("fork error:");
@@ -92,13 +98,18 @@ int main(int argc, char **argv)
     while (1)
     {
         printf("%s ~$ ", cwd);
-        read = getline(&input, &input_size, stdin);
-        if (read == -1)
+    read = getline(&input, &input_size, stdin);
+    if (read == -1)
+    {
+        if (feof(stdin))
         {
-            printf("Error reading input.\n");
-            free(input);
-            return (1);
+            printf("\n");
+            break;
         }
+        printf("Error reading input.\n");
+        free(input);
+        return (1);
+	}
 
         input[strcspn(input, "\n")] = '\0';
 
@@ -108,7 +119,7 @@ int main(int argc, char **argv)
         token = strtok(input, " ");
         while (token != NULL)
         {
-            pid_t pid = fork();
+            pid = fork();
             if (pid == -1)
             {
                 perror("fork error:");
