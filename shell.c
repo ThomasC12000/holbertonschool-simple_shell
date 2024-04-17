@@ -18,7 +18,7 @@ int main()
 
     while (should_run) 
     {
-        printf("\033[36m@%s: $ ", getenv("PWD"));
+        printf("\033[32m@%s\033[0m ➜ \033[36m%s\033[0m $ ", getenv("USER"), getenv("PWD"));
         fflush(stdout);
 
         if (fgets(command, MAX_CMD_LEN, stdin) == NULL) 
