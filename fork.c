@@ -8,26 +8,27 @@
  */
 int execute_command(char *args[])
 {
-	pid_t pid;
+    pid_t pid;
 
-	pid = fork();
+    pid = fork();
 
-	if (pid < 0) 
-	{
-		fprintf(stderr, "Erreur lors de la création du processus fils\n");
-		return (1);
-	}
-	if (pid == 0) 
-	{
-		if (execvp(args[0], args) == -1) 
-		{
-			fprintf(stderr, "Erreur lors de l'exécution de la commande\n");
-			exit(EXIT_FAILURE);
-		}
-	} 
-	else 
-	{
-		wait(NULL);
-	}
-	return (0);
+    if (pid < 0) 
+    {
+        fprintf(stderr, "Erreur lors de la création du processus fils\n");
+        return 1;
+    }
+    if (pid == 0) 
+    {
+        char *envp[] = { NULL };
+        if (execve(args[0], args, envp) == -1) 
+        {
+            fprintf(stderr, "Erreur lors de l'exécution de la commande\n");
+            exit(EXIT_FAILURE);
+        }
+    } 
+    else 
+    {
+        wait(NULL);
+    }
+    return 0;
 }
