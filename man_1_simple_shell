@@ -1,1 +1,44 @@
-man page
+.TH SIMPLE_SHELL 1 "April 2024" "Version 1.0" "simple_shell Manual"
+
+.SH NAME
+simple_shell \- A simple Unix command line interpreter
+
+.SH SYNOPSIS
+.B simple_shell
+
+.SH DESCRIPTION
+.PP
+simple_shell is a simple Unix command line interpreter. It reads commands
+from the standard input or from a file and executes them.
+
+.SH OPTIONS
+.PP
+This program has no command-line options.
+
+.SH COMMANDS
+.PP
+The following commands are available in simple_shell:
+
+.TP
+.B exit
+Exit the shell.
+
+.TP
+.B help
+Display information about builtin commands.
+
+.SH AUTHOR
+Written by Benoit Beti - Thomas Chlpac.
+
+.SH REPORTING BUGS
+Report any bugs or issues to [Your Email Address].
+
+.SH SEE ALSO
+.PP
+.BR sh (1),
+.BR bash (1)
+
+.SH COPYRIGHT
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
