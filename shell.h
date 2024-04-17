@@ -7,6 +7,8 @@
 #include <string.h>
 #include <sys/wait.h>
 
+extern char **environ;
+
 int execute_command(char *args[]);
 
 #endif /* SHELL_H */
