@@ -8,7 +8,7 @@
  *
  * Return: Always 0
  */
-int main() 
+int main()
 {
 	char command[MAX_CMD_LEN];
 	char *args[MAX_ARGS];
@@ -16,21 +16,19 @@ int main()
 	char *token;
 	int i;
 
-	while (should_run) 
+	while (should_run)
 	{
 		if (isatty(STDIN_FILENO))
 		{
-		printf("\033[32m@%s\033[0m:\033[36m%s\033[0m $ ", getenv("USER"), getenv("PWD"));
-		fflush(stdout);
+			printf("\033[32m@%s\033[0m ➜ \033[36m%s\033[0m $ ", getenv("USER"), getenv("PWD"));
+			fflush(stdout);
 		}
-		if (fgets(command, MAX_CMD_LEN, stdin) == NULL) 
+		if (fgets(command, MAX_CMD_LEN, stdin) == NULL)
 		{
-			break;  
+			break;
 		}
 
-		command[strcspn(command, "\n")] = '\0';
-
-		if (strcmp(command, "exit") == 0) 
+		if (strcmp(command, "exit") == 0)
 		{
 			should_run = 0;
 			continue;
@@ -38,7 +36,7 @@ int main()
 
 		i = 0;
 		token = strtok(command, " ");
-		while (token != NULL && i < MAX_ARGS - 1) 
+		while (token != NULL && i < MAX_ARGS - 1)
 		{
 			args[i++] = token;
 			token = strtok(NULL, " ");
