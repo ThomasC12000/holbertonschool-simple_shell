@@ -1,6 +1,6 @@
 #include "shell.h"
 
-#define MAX_PATH_LEN 1024
+#define MAX_PATH_LEN 4096
 
 /**
  * is_path - checks if the command is a path
@@ -28,37 +28,33 @@ int is_path(char *command)
  */
 char *find_executable(char *command)
 {
-    char *path;
-    char *token;
-    char *full_path = NULL;
+	char *path;
+	char *token;
+	char *full_path;
 
-    if (is_path(command))
-        return command;
+	if (is_path(command))
+		return (command);
 
-    path = getenv("PATH");
-    if (!path)
-    {
-        fprintf(stderr, "Erreur: Impossible de récupérer le chemin\n");
-        return NULL;
-    }
+	path = getenv("PATH");
+	full_path = malloc(MAX_PATH_LEN);
+	if (!path || !full_path)
+	{
+		fprintf(stderr,
+			"Erreur: Impossible de récupérer le chemin ou d'allouer de la mémoire\n"
+		);
+		return (NULL);
+	}
 
-    token = strtok(path, ":");
-    while (token != NULL)
-    {
-        full_path = malloc(MAX_PATH_LEN);
-        if (!full_path)
-        {
-            fprintf(stderr, "Erreur: Impossible d'allouer de la mémoire\n");
-            return NULL;
-        }
-        snprintf(full_path, MAX_PATH_LEN, "%s/%s", token, command);
-        if (access(full_path, X_OK) == 0)
-            return full_path;
-        free(full_path);
-        token = strtok(NULL, ":");
-    }
-    fprintf(stderr, "Erreur: Commande introuvable\n");
-    return NULL;
+	token = strtok(path, ":");
+	while (token != NULL)
+	{
+		snprintf(full_path, MAX_PATH_LEN, "%s/%s", token, command);
+		if (access(full_path, X_OK) == 0)
+			return (full_path);
+		token = strtok(NULL, ":");
+	}
+	free(full_path);
+	return (NULL);
 }
 
 /**
