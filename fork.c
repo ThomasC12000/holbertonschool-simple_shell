@@ -3,6 +3,24 @@
 #define MAX_PATH_LEN 1024
 
 /**
+ * is_path - checks if the command is a path
+ * @command: command to check
+ * Return: 1 if it is a path, 0 if not
+ */
+int is_path(char *command)
+{
+	int i = 0;
+
+	while (command[i])
+	{
+		if (command[i] == '/')
+			return (1);
+		i++;
+	};
+	return (0);
+}
+
+/**
  * find_executable - Finds the full path of an executable file
  * @command: The command to search for
  *
@@ -10,15 +28,21 @@
  */
 char *find_executable(char *command)
 {
-    char *path = getenv("PATH");
+    char *path;
     char *token;
-    char *full_path = malloc(MAX_PATH_LEN);
+    char *full_path;
 
-    if (!path || !full_path) {
+    if (is_path(command))
+        return(command);
+
+    path = getenv("PATH");
+    full_path = malloc(MAX_PATH_LEN);
+    if (!path || !full_path)
+    {
         fprintf(stderr, "Erreur: Impossible de récupérer le chemin ou d'allouer de la mémoire\n");
         return NULL;
     }
-
+        
     token = strtok(path, ":");
     while (token != NULL) 
     {
