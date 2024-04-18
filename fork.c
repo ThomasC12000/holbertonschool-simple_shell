@@ -28,32 +28,33 @@ int is_path(char *command)
  */
 char *find_executable(char *command)
 {
-    char *path;
-    char *token;
-    char *full_path;
+	char *path;
+	char *token;
+	char *full_path;
 
-    if (is_path(command))
-        return(command);
+	if (is_path(command))
+		return (command);
 
-    path = getenv("PATH");
-    full_path = malloc(MAX_PATH_LEN);
-    if (!path || !full_path)
-    {
-        fprintf(stderr, "Erreur: Impossible de récupérer le chemin ou d'allouer de la mémoire\n");
-        return NULL;
-    }
-        
-    token = strtok(path, ":");
-    while (token != NULL) 
-    {
-        snprintf(full_path, MAX_PATH_LEN, "%s/%s", token, command);
-        if (access(full_path, X_OK) == 0) {
-            return full_path;
-        }
-        token = strtok(NULL, ":");
-    }
-    free(full_path);
-    return NULL;
+	path = getenv("PATH");
+	full_path = malloc(MAX_PATH_LEN);
+	if (!path || !full_path)
+	{
+		fprintf(stderr,
+			"Erreur: Impossible de récupérer le chemin ou d'allouer de la mémoire\n"
+		);
+		return (NULL);
+	}
+
+	token = strtok(path, ":");
+	while (token != NULL)
+	{
+		snprintf(full_path, MAX_PATH_LEN, "%s/%s", token, command);
+		if (access(full_path, X_OK) == 0)
+			return (full_path);
+		token = strtok(NULL, ":");
+	}
+	free(full_path);
+	return (NULL);
 }
 
 /**
@@ -64,34 +65,34 @@ char *find_executable(char *command)
 
 int execute_command(char *args[])
 {
-    pid_t pid;
+	pid_t pid;
 
-    pid = fork();
+	pid = fork();
 
-    if (pid < 0) 
-    {
-        fprintf(stderr, "Erreur lors de la création du processus fils\n");
-        return (1);
-    }
-    if (pid == 0) 
-    {
-        char *full_path = find_executable(args[0]);
+	if (pid < 0)
+	{
+		fprintf(stderr, "Erreur lors de la création du processus fils\n");
+		return (1);
+	}
+	if (pid == 0)
+	{
+		char *full_path = find_executable(args[0]);
 
-        if (full_path == NULL)
-        {
-            fprintf(stderr, "Erreur: commande introuvable\n");
-            exit(EXIT_FAILURE);
-        }
+		if (full_path == NULL)
+		{
+			fprintf(stderr, "Erreur: commande introuvable\n");
+			exit(EXIT_FAILURE);
+		}
 
-        if (execve(full_path, args, environ) == -1)
-        {
-            perror("Erreur lors de l'exécution de la commande");
-            exit(EXIT_FAILURE);
-        }
-    } 
-    else 
-    {
-        wait(NULL);
-    }
-    return (0);
+		if (execve(full_path, args, environ) == -1)
+		{
+			perror("Erreur lors de l'exécution de la commande");
+			exit(EXIT_FAILURE);
+		}
+	}
+	else
+	{
+		wait(NULL);
+	}
+	return (0);
 }
