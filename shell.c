@@ -5,10 +5,9 @@
 
 /**
  * main - Entry point for the shell program
- *
  * Return: Always 0
  */
-int main() 
+int main(void) 
 {
     char command[MAX_CMD_LEN];
     char *args[MAX_ARGS];
@@ -45,5 +44,5 @@ int main()
 
         execute_command(args);
     }
-    return 0;
+    return (0);
 }
