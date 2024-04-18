@@ -35,9 +35,9 @@ char *find_executable(char *command)
 /**
  * execute_command - Execute a command with its arguments
  * @args: Array of strings containing the command and its arguments
- *
  * Return: 0 on success, 1 on failure
  */
+
 int execute_command(char *args[])
 {
     pid_t pid;
@@ -47,7 +47,7 @@ int execute_command(char *args[])
     if (pid < 0) 
     {
         fprintf(stderr, "Erreur lors de la création du processus fils\n");
-        return 1;
+        return (1);
     }
     if (pid == 0) 
     {
@@ -69,5 +69,5 @@ int execute_command(char *args[])
     {
         wait(NULL);
     }
-    return 0;
+    return (0);
 }
