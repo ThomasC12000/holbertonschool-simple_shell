@@ -1,5 +1,37 @@
 #include "shell.h"
 
+#define MAX_PATH_LEN 1024
+
+/**
+ * find_executable - Finds the full path of an executable file
+ * @command: The command to search for
+ *
+ * Return: The full path of the executable file if found, otherwise NULL
+ */
+char *find_executable(char *command)
+{
+    char *path = getenv("PATH");
+    char *token;
+    char *full_path = malloc(MAX_PATH_LEN);
+
+    if (!path || !full_path) {
+        fprintf(stderr, "Erreur: Impossible de récupérer le chemin ou d'allouer de la mémoire\n");
+        return NULL;
+    }
+
+    token = strtok(path, ":");
+    while (token != NULL) 
+    {
+        snprintf(full_path, MAX_PATH_LEN, "%s/%s", token, command);
+        if (access(full_path, X_OK) == 0) {
+            return full_path;
+        }
+        token = strtok(NULL, ":");
+    }
+    free(full_path);
+    return NULL;
+}
+
 /**
  * execute_command - Execute a command with its arguments
  * @args: Array of strings containing the command and its arguments
@@ -19,10 +51,17 @@ int execute_command(char *args[])
     }
     if (pid == 0) 
     {
-        char *envp[] = { NULL };
-        if (execve(args[0], args, envp) == -1) 
+        char *full_path = find_executable(args[0]);
+
+        if (full_path == NULL)
         {
-            fprintf(stderr, "Erreur lors de l'exécution de la commande\n");
+            fprintf(stderr, "Erreur: commande introuvable\n");
+            exit(EXIT_FAILURE);
+        }
+
+        if (execve(full_path, args, environ) == -1)
+        {
+            perror("Erreur lors de l'exécution de la commande");
             exit(EXIT_FAILURE);
         }
     } 

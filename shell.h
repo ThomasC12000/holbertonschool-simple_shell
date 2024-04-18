@@ -10,5 +10,6 @@
 extern char **environ;
 
 int execute_command(char *args[]);
+char *find_executable(char *command);
 
 #endif /* SHELL_H */
