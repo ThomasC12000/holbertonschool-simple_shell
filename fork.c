@@ -89,6 +89,7 @@ int execute_command(char *args[])
 			perror("Erreur lors de l'exécution de la commande");
 			exit(EXIT_FAILURE);
 		}
+		exit(EXIT_SUCCESS);
 	}
 	else
 	{
