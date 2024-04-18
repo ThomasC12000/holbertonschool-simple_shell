@@ -1,6 +1,6 @@
 #include "shell.h"
 
-#define MAX_PATH_LEN 4096
+#define MAX_PATH_LEN 1024
 
 /**
  * is_path - checks if the command is a path
@@ -33,26 +33,28 @@ char *find_executable(char *command)
 	char *full_path;
 
 	if (is_path(command))
-		return command;
+		return (command);
 
 	path = getenv("PATH");
-	full_path = malloc(pathconf(".", _PC_PATH_MAX));
+	full_path = malloc(MAX_PATH_LEN);
 	if (!path || !full_path)
 	{
-		fprintf(stderr, "Erreur: Impossible de récupérer le chemin ou d'allouer de la mémoire\n");
-		return NULL;
+		fprintf(stderr,
+			"Erreur: Impossible de récupérer le chemin ou d'allouer de la mémoire\n"
+		);
+		return (NULL);
 	}
 
 	token = strtok(path, ":");
 	while (token != NULL)
 	{
-		snprintf(full_path, pathconf(".", _PC_PATH_MAX), "%s/%s", token, command);
+		snprintf(full_path, MAX_PATH_LEN, "%s/%s", token, command);
 		if (access(full_path, X_OK) == 0)
-			return full_path;
+			return (full_path);
 		token = strtok(NULL, ":");
 	}
 	free(full_path);
-	return NULL;
+	return (NULL);
 }
 
 /**
