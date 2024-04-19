@@ -9,34 +9,34 @@
  */
 int main(void)
 {
-	char command[MAX_CMD_LEN];
-	char *args[MAX_ARGS];
-	int should_run = 1;
-	char *token;
-	int i;
+	char *command = NULL;
+	size_t command_size = 0;
+	ssize_t bytes_read;
+	char *args[MAX_ARGS], *token;
+	int should_run = 1, i;
 
 	while (should_run)
 	{
 		if (isatty(STDIN_FILENO))
 			printf("\033[32m@%s\033[0m ➜ \033[36m%s\033[0m $ ",
-				getenv("USER"),
-				getenv("PWD")
-			);
+				getenv("USER"),	getenv("PWD"));
 		fflush(stdout);
-
-		if (fgets(command, MAX_CMD_LEN, stdin) == NULL)
-		{
+		bytes_read = getline(&command, &command_size, stdin);
+		if (bytes_read == -1)
 			break;
+		for (i = 0; command[i] != '\0'; i++)
+		{
+			if (command[i] == '\n')
+			{
+				command[i] = '\0';
+				break;
+			}
 		}
-
-		command[strcspn(command, "\n")] = '\0';
-
 		if (strcmp(command, "exit") == 0)
 		{
 			should_run = 0;
 			continue;
 		}
-
 		i = 0;
 		token = strtok(command, " ");
 		while (token != NULL && i < MAX_ARGS - 1)
@@ -45,8 +45,8 @@ int main(void)
 			token = strtok(NULL, " ");
 		}
 		args[i] = NULL;
-
 		execute_command(args);
 	}
+	free(command);
 	return (0);
 }
