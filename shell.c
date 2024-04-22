@@ -4,12 +4,11 @@
 #define MAX_ARGS 10
 
 /**
- * handle_exit_command - Function to handle the "exit" command in the shell
- *
+ * exit_command - Function to handle the "exit" command in the shell
  * This function is called when the user enters the "exit" command.
  */
 
-void exit_command()
+void exit_command(void)
 {
 	exit(0);
 }
