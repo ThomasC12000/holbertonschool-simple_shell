@@ -28,33 +28,31 @@ int is_path(char *command)
  */
 char *find_executable(char *command)
 {
-	char *path;
-	char *token;
-	char *full_path;
-
-	if (is_path(command))
-		return (command);
-
-	path = _getenv("PATH");
-	full_path = malloc(MAX_PATH_LEN);
-	if (!path || !full_path)
-	{
-		fprintf(stderr,
-			"Erreur: Impossible de récupérer le chemin ou d'allouer de la mémoire\n"
-		);
-		return (NULL);
-	}
-
-	token = strtok(path, ":");
-	while (token != NULL)
-	{
-		snprintf(full_path, MAX_PATH_LEN, "%s/%s", token, command);
-		if (access(full_path, X_OK) == 0)
-			return (full_path);
-		token = strtok(NULL, ":");
-	}
-	free(full_path);
-	return (NULL);
+    char *path = _getenv("PATH");
+    char *token, *full_path;
+    
+    if (!path) {
+        fprintf(stderr, "Impossible de récupérer la valeur de la variable PATH\n");
+        return NULL;
+    }
+    
+    full_path = malloc(MAX_PATH_LEN);
+    if (!full_path) {
+        fprintf(stderr, "Impossible d'allouer de la mémoire\n");
+        return NULL;
+    }
+    
+    token = strtok(path, ":");
+    while (token != NULL)
+    {
+        snprintf(full_path, MAX_PATH_LEN, "%s/%s", token, command);
+        if (access(full_path, X_OK) == 0)
+            return full_path;
+        token = strtok(NULL, ":");
+    }
+    
+    free(full_path);
+    return NULL;
 }
 
 /**
