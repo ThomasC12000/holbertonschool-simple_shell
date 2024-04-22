@@ -11,11 +11,6 @@ int is_path(char *command)
 {
 	int i = 0;
 
-	if (command == NULL)
-	{
-	return (0);
-	}
-
 	while (command[i])
 	{
 		if (command[i] == '/')
