@@ -12,5 +12,6 @@ extern char **environ;
 int execute_command(char *args[]);
 char *find_executable(char *command);
 char *_getenv(const char *name);
+void env_builtin(void);
 
 #endif /* SHELL_H */

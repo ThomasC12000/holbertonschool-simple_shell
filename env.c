@@ -31,3 +31,13 @@ char *_getenv(const char *name)
 	}
 	return (NULL);
 }
+
+void env_builtin(void)
+{
+    int i = 0;
+    while (environ[i] != NULL)
+    {
+        printf("%s\n", environ[i]);
+        i++;
+    }
+}
