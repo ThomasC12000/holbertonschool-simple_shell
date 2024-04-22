@@ -11,6 +11,9 @@ int is_path(char *command)
 {
 	int i = 0;
 
+	if (command == NULL)
+		return (0);
+
 	while (command[i])
 	{
 		if (command[i] == '/')
@@ -30,10 +33,10 @@ char *find_executable(char *command)
 {
 	char *path;
 	char *token;
-	char *full_path;
+	char *full_path, *result;
 
 	if (is_path(command))
-		return (command);
+		return strdup(command);
 
 	path = getenv("PATH");
 	if (path == NULL)
@@ -54,8 +57,12 @@ char *find_executable(char *command)
 	{
 		snprintf(full_path, MAX_PATH_LEN, "%s/%s", token, command);
 		if (access(full_path, X_OK) == 0)
-			return (full_path);
-		token = strtok(NULL, ":");
+		{
+			result = strdup(full_path);
+			free(full_path);
+			return (result);
+		}
+	token = strtok(NULL, ":");
 	}
 	free(full_path);
 	return (NULL);
