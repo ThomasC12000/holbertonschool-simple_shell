@@ -13,6 +13,9 @@ char *_getenv(const char *name)
 	char *env;
 	int i, j;
 
+	if (name == NULL) {
+		return (NULL);
+	}
 	for (i = 0; environ[i] != NULL; i++)
 	{
 		env = environ[i];
