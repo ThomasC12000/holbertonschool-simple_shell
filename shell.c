@@ -4,20 +4,9 @@
 #define MAX_ARGS 10
 
 /**
- * exit_command - Function to handle the "exit" command in the shell
- * This function is called when the user enters the "exit" command.
- */
-
-void exit_command(void)
-{
-	exit(0);
-}
-
-/**
  * main - Entry point for the shell program
  * Return: Always 0
  */
-
 int main(void)
 {
 	char *command = NULL;
@@ -30,7 +19,7 @@ int main(void)
 	{
 		if (isatty(STDIN_FILENO))
 			printf("\033[32m@%s\033[0m ➜ \033[36m%s\033[0m $ ",
-				_getenv("USER"),	_getenv("PWD"));
+				getenv("USER"),	getenv("PWD"));
 		fflush(stdout);
 		bytes_read = getline(&command, &command_size, stdin);
 		if (bytes_read == -1)
@@ -45,7 +34,8 @@ int main(void)
 		}
 		if (strcmp(command, "exit") == 0)
 		{
-			exit_command();
+			should_run = 0;
+			continue;
 		}
 		i = 0;
 		token = strtok(command, " ");
