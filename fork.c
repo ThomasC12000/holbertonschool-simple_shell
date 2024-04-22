@@ -35,7 +35,7 @@ char *find_executable(char *command)
 	if (is_path(command))
 		return (command);
 
-	path = getenv("PATH");
+	path = _getenv("PATH");
 	full_path = malloc(MAX_PATH_LEN);
 	if (!path || !full_path)
 	{
