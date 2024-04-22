@@ -19,7 +19,7 @@ int main(void)
 	{
 		if (isatty(STDIN_FILENO))
 			printf("\033[32m@%s\033[0m ➜ \033[36m%s\033[0m $ ",
-				getenv("USER"),	getenv("PWD"));
+				_getenv("USER"),	_getenv("PWD"));
 		fflush(stdout);
 		bytes_read = getline(&command, &command_size, stdin);
 		if (bytes_read == -1)
