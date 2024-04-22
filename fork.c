@@ -11,10 +11,16 @@ int is_path(char *command)
 {
 	int i = 0;
 
+	if (command == NULL) 
+	{
+		fprintf(stderr, "Erreur : pointeur de commande nul\n");
+		return (0);
+	}
+
 	while (command[i])
 	{
 		if (command[i] == '/')
-			return (1);
+			return 1;
 		i++;
 	};
 	return (0);
@@ -40,8 +46,8 @@ char *find_executable(char *command)
 	if (!path || !full_path)
 	{
 		fprintf(stderr,
-			"Erreur: Impossible de récupérer le chemin ou d'allouer de la mémoire\n"
-		);
+				"Erreur: Impossible de récupérer le chemin ou d'allouer de la mémoire\n"
+			   );
 		return (NULL);
 	}
 
