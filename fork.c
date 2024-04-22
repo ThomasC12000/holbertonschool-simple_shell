@@ -20,11 +20,6 @@ int is_path(char *command)
 	return (0);
 }
 
-char *get_path(void)
-{
-    return _getenv("PATH");
-}
-
 /**
  * find_executable - Finds the full path of an executable file
  * @command: The command to search for
@@ -33,13 +28,14 @@ char *get_path(void)
  */
 char *find_executable(char *command)
 {
-	char *path = get_path();
+	char *path;
 	char *token;
 	char *full_path;
 
 	if (is_path(command))
 		return (command);
 
+	path = get_path("PATH");
 	full_path = malloc(MAX_PATH_LEN);
 	if (!path || !full_path)
 	{
