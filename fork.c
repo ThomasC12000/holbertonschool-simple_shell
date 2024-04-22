@@ -11,10 +11,15 @@ int is_path(char *command)
 {
 	int i = 0;
 
+	if (command == NULL)
+	{
+	return (0);
+	}
+
 	while (command[i])
 	{
 		if (command[i] == '/')
-			return 1;
+			return (1);
 		i++;
 	};
 	return (0);
@@ -28,39 +33,37 @@ int is_path(char *command)
  */
 char *find_executable(char *command)
 {
-    char *path;
-    char *token;
-    char *full_path;
+	char *path;
+	char *token;
+	char *full_path;
 
-    if (is_path(command))
-        return (command);
+	if (is_path(command))
+		return (command);
 
-    path = getenv("PATH");
-    if (!path)
-    {
-        fprintf(stderr,
-                "Erreur: Impossible de récupérer le chemin\n");
-        return (NULL);
-    }
+	path = getenv("PATH");
+	if (path == NULL)
+	{
+		fprintf(stderr, "Erreur: Impossible de récupérer le chemin\n");
+		return (NULL);
+	}
 
-    token = strtok(path, ":");
-    while (token != NULL)
-    {
-        full_path = malloc(MAX_PATH_LEN);
-        if (!full_path)
-        {
-            fprintf(stderr,
-                    "Erreur: Impossible d'allouer de la mémoire pour le chemin complet\n");
-            return (NULL);
-        }
-        snprintf(full_path, MAX_PATH_LEN, "%s/%s", token, command);
-        if (access(full_path, X_OK) == 0)
-            return (full_path);
-        free(full_path);
-        token = strtok(NULL, ":");
-    }
-    fprintf(stderr, "Erreur: Commande introuvable dans le PATH\n");
-    return (NULL);
+	full_path = malloc(MAX_PATH_LEN);
+	if (full_path == NULL)
+	{
+		fprintf(stderr, "Erreur: Impossible d'allouer de la mémoire\n");
+		return (NULL);
+	}
+
+	token = strtok(path, ":");
+	while (token != NULL)
+	{
+		snprintf(full_path, MAX_PATH_LEN, "%s/%s", token, command);
+		if (access(full_path, X_OK) == 0)
+			return (full_path);
+		token = strtok(NULL, ":");
+	}
+	free(full_path);
+	return (NULL);
 }
 
 /**
