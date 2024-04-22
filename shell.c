@@ -4,9 +4,21 @@
 #define MAX_ARGS 10
 
 /**
+ * handle_exit_command - Function to handle the "exit" command in the shell
+ *
+ * This function is called when the user enters the "exit" command.
+ */
+
+void exit_command()
+{
+	exit(0);
+}
+
+/**
  * main - Entry point for the shell program
  * Return: Always 0
  */
+
 int main(void)
 {
 	char *command = NULL;
@@ -34,8 +46,7 @@ int main(void)
 		}
 		if (strcmp(command, "exit") == 0)
 		{
-			should_run = 0;
-			continue;
+			exit_command();
 		}
 		i = 0;
 		token = strtok(command, " ");
