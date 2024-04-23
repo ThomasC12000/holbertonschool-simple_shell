@@ -80,10 +80,13 @@
 	
 | FILE                                       | DESCRIPTION                       |
 |--------------------------------------------|-----------------------------------|
-| [`shell.h`](shell.h)                       | libraries and function prototypes |
-| [`shell.c`](shell.c)                       | mains function of the shell       |
-| [`man_1_simple_shell`](man_1_simple_shell) | man page                          |
+| [`shell.h`](shell.h)                       | Libraries and function prototypes |
+| [`shell.c`](shell.c)                       | Mains function of the shell       |
+| [`man_1_simple_shell`](man_1_simple_shell) | Man page                          |
 | [`README.md`](README.md)                   | README file                       |
+| [`AUTHORS`](AUTHORS)                       | File of authors                   |
+| [`fork.c`](fork.c)                         | Execute commands                  |
+| [`env.c`](env.c)                           | Environment variable              |
 
 <br />
 
