@@ -1,15 +1,25 @@
 .TH SIMPLE_SHELL 1 "April 2024" "Version 1.0" "simple_shell Manual"
 
 .SH NAME
-simple_shell \- A simple Unix command line interpreter
+\fBSimple_shell\fP \- A simple Unix command line interpreter
 
 .SH SYNOPSIS
-.B simple_shell
+.B - ./hsh
+.br
+.B - echo \(dqyour_command\(dq | ./hsh
 
 .SH DESCRIPTION
 .PP
-simple_shell is a simple Unix command line interpreter. It reads commands
-from the standard input or from a file and executes them.
+\fBSimple_shell\fP is a simple command line interpreter that allows the user to execute system commands.
+.br
+It supports built-in commands such as \fB"exit"\fP and \fB"env"\fP, as well as execution of external
+commands.
+
+When \fBsimple_shell\fP is launched, it displays a command prompt where the user can enter commands.
+.br
+After entering a command, the user can press the \fB"Enter"\fP key to execute the command. \fBsimple_shell\fP
+will then process the command, executing built-in commands or external commands, and
+then display the command prompt again to allow the user to enter a new command.
 
 .SH OPTIONS
 .PP
@@ -17,28 +27,26 @@ This program has no command-line options.
 
 .SH COMMANDS
 .PP
-The following commands are available in simple_shell:
+The following commands are available in \fBsimple_shell\fP:
 
 .TP
-.B exit
+.B \fBexit\fP :
 Exit the shell.
 
 .TP
-.B help
-Display information about builtin commands.
+.B \fBenv\fP :
+Display the system environment.
 
 .SH AUTHOR
-Written by Benoit Beti - Thomas Chlpac.
+Written by \fBBenoit Beti\fP - \fBThomas Chlpac\fP.
 
 .SH REPORTING BUGS
-Report any bugs or issues to [Your Email Address].
+Report any bugs or issues to \fIbenoit.beti@holbertonstudents.com\fR or \fIthomas.chlpac@holbertonstudents.com\fR
 
 .SH SEE ALSO
 .PP
-.BR sh (1),
-.BR bash (1)
+man bash
 
 .SH COPYRIGHT
 .PP
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
+This is free software, you are free to change and redistribute it.
