@@ -90,6 +90,14 @@
 
 <br />
 
+## #️⃣ - Flowchart -
+
+<br />
+
+<img width="1020px" height="600px" src="FILES/FLOWCHART.png">
+
+<br />
+
 ## #️⃣ - Team -
 
 *BETI MARANGON Benoît		- [Github](https://github.com/BenBet21)*
