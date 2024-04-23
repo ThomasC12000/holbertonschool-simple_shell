@@ -17,6 +17,7 @@
 ## :link: - Quick Links -
 * [Requirements for this project](#%EF%B8%8F⃣---requirements-for-this-project--)
 * [File descriptions](#%EF%B8%8F⃣---file-descriptions--)
+* [Flowchart](#%EF%B8%8F⃣---flowchart--)
 * [Team](#%EF%B8%8F⃣---team--)
 
 <br />
