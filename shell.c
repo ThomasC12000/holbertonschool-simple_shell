@@ -24,20 +24,27 @@ int main(void)
 		bytes_read = getline(&command, &command_size, stdin);
 		if (bytes_read == -1)
 			break;
-		for (i = 0; command[i] != '\0'; i++)
-		{
-			if (command[i] == '\n')
-			{
-				command[i] = '\0';
-				break;
-			}
-		}
-		if (strcmp(command, "exit") == 0)
-		{
-			should_run = 0;
-			continue;
-		}
-		if (strcmp(command, "env") == 0)
+		while (*command == ' ' || *command == '\t')
+            command++;
+
+         if (*command == '\0' || *command == '\n')
+            continue;
+
+        i = 0;
+        token = strtok(command, " ");
+        while (token != NULL && i < MAX_ARGS - 1)
+        {
+            args[i++] = token;
+            token = strtok(NULL, " ");
+        }
+        args[i] = NULL;
+
+        if (strcmp(args[0], "exit") == 0)
+        {
+            should_run = 0;
+            continue;
+        }
+        if (strcmp(args[0], "env") == 0)
 		{
 			env_builtin();
 			continue;
@@ -49,7 +56,6 @@ int main(void)
 			args[i++] = token;
 			token = strtok(NULL, " ");
 		}
-		args[i] = NULL;
 		execute_command(args);
 	}
 	free(command);
