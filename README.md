@@ -17,6 +17,7 @@
 ## :link: - Quick Links -
 * [Requirements for this project](#%EF%B8%8F⃣---requirements-for-this-project--)
 * [File descriptions](#%EF%B8%8F⃣---file-descriptions--)
+* [How to install run and use our Simple Shell](#%EF%B8%8F⃣---how-to-install-run-and-use-our-simple-shell--)
 * [Flowchart](#%EF%B8%8F⃣---flowchart--)
 * [Team](#%EF%B8%8F⃣---team--)
 
@@ -93,7 +94,7 @@
 
 ## #️⃣ - How to install run and use our Simple Shell -
 
-### Install and run:
+### Install and run :
 
 To install and run Simple Shell, follow these steps:
 
