@@ -38,7 +38,7 @@ char *find_executable(char *command)
 	if (is_path(command))
 		return strdup(command);
 
-	path = getenv("PATH");
+	path = _getenv("PATH");
 	if (path == NULL)
 	{
 		fprintf(stderr, "Erreur: Impossible de récupérer le chemin\n");
