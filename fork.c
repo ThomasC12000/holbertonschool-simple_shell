@@ -38,7 +38,7 @@ char *find_executable(char *command)
 	if (is_path(command))
 		return strdup(command);
 
-	path = getenv("PATH");
+	path = _getenv("PATH");
 	if (path == NULL)
 	{
 		fprintf(stderr, "Erreur: Impossible de récupérer le chemin\n");
@@ -91,7 +91,7 @@ int execute_command(char *args[])
 
 		if (full_path == NULL)
 		{
-			fprintf(stderr, "Erreur: commande introuvable\n");
+			fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
 			exit(EXIT_FAILURE);
 		}
 
