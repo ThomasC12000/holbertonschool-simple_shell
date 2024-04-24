@@ -26,16 +26,21 @@ int main(void)
 
         bytes_read = getline(&command, &command_size, stdin);
         if (bytes_read == -1)
+		{
             break;
-
-        for (i = 0; i < bytes_read; i++) {
-            if (command[i] != ' ' && command[i] != '\t' && command[i] != '\n') {
+		}
+        for (i = 0; i < bytes_read; i++) 
+		{
+            if (command[i] != ' ' && command[i] != '\t' && command[i] != '\n')
+			{
                 is_empty = 0;
                 break;
             }
         }
         if (is_empty)
+		{
             continue;
+		}
 
         command[strlen(command) - 1] = '\0';
 
@@ -44,7 +49,6 @@ int main(void)
             should_run = 0;
             continue;
         }
-
         if (strcmp(command, "env") == 0)
         {
             env_builtin();
