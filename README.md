@@ -96,9 +96,9 @@
 
 ### Install and run :
 
-To install and run Simple Shell, follow these steps:
+To install and run Simple Shell, follow these steps :
 
-Clone the repository using the following command:
+Clone the repository using the following command :
 ```
 git clone https://github.com/ThomasC12000/holbertonschool-simple_shell.git
 ```
@@ -110,7 +110,7 @@ Compile the program by running the following command:
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 ```
 
-Run the program by typing the following command:
+Run the program by typing the following command :
 ```
 ./hsh
 ```
