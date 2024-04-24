@@ -105,7 +105,7 @@ git clone https://github.com/ThomasC12000/holbertonschool-simple_shell.git
 
 Navigate to the directory where the repository was cloned.
 
-Compile the program by running the following command:
+Compile the program by running the following command :
 ```
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 ```
